@@ -1,36 +1,12 @@
 package ru.geekbrains.gostevnv;
 
-import io.restassured.RestAssured;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 
-public class GetImageTests {
-
-    static Properties prop = new Properties();
-    static String token;
-    static String clientId;
-    private static Map<String, String> headers = new HashMap<>();
-
-    @BeforeAll
-    static void setUp() {
-        loadProperties();
-        clientId = prop.getProperty("client.id");
-        token = prop.getProperty("token");
-
-        headers.put("Authorization", token);
-        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
-        RestAssured.baseURI = prop.getProperty("base.url");
-    }
-
+public class GetImageTests extends BaseTest {
 
     @Test
     void getImagePositiveTest() {
@@ -39,7 +15,7 @@ public class GetImageTests {
                 .method()
                 .log()
                 .uri()
-                .headers(headers)
+                .headers("Authorization", token)
                 .when()
                 .get("/KhiV5Gs")
                 .prettyPeek()
@@ -54,6 +30,7 @@ public class GetImageTests {
                 .method()
                 .log()
                 .uri()
+                .headers("Authorization", clientId)
                 .when()
                 .get("/daVMThb")
                 .prettyPeek()
@@ -68,7 +45,7 @@ public class GetImageTests {
         given()
                 .log()
                 .uri()
-                .headers(headers)
+                .headers("Authorization", token)
                 .when()
                 .get("/KhiV")
                 .then()
@@ -89,12 +66,18 @@ public class GetImageTests {
 
     }
 
-    private static void loadProperties() {
-        try (InputStream file = new FileInputStream("src/test/application.properties")) {
-            prop.load(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @Test
+    void getImageManyCheks() {
+        given()
+                .headers("Authorization", token)
+                .expect()
+                .body("success", is(true))
+                .body("data.width", is(800))
+                .body("data.id", is(notNullValue()))
+                .when()
+                .get("/daVMThb")
+                .then()
+                .statusCode(200);
     }
 
 }
