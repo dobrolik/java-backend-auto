@@ -11,16 +11,16 @@ public class GetImageTests extends BaseTest {
     @Test
     void getImagePositiveTest() {
         given()
+                .spec(reqSpec)
                 .log()
                 .method()
                 .log()
                 .uri()
-                .headers("Authorization", token)
                 .when()
                 .get("/KhiV5Gs")
                 .prettyPeek()
                 .then()
-                .statusCode(200);
+                .spec(respSpec);
     }
 
     @Test
@@ -43,9 +43,9 @@ public class GetImageTests extends BaseTest {
     @Test
     void badImageHashTest() {
         given()
+                .spec(reqSpec)
                 .log()
                 .uri()
-                .headers("Authorization", token)
                 .when()
                 .get("/KhiV")
                 .then()
@@ -56,20 +56,20 @@ public class GetImageTests extends BaseTest {
     @Test
     void badAuthTokenTest() {
         given()
+                .spec(withoutAuthSpec)
                 .log()
                 .uri()
                 .when()
-                .headers("Autorization", "Bearer ")
                 .get("/daVMThb")
                 .then()
-                .statusCode(401);
+                .statusCode(403);
 
     }
 
     @Test
-    void getImageManyCheks() {
+    void getImageManyChecks() {
         given()
-                .headers("Authorization", token)
+                .spec(reqSpec)
                 .expect()
                 .body("success", is(true))
                 .body("data.width", is(800))
@@ -77,7 +77,7 @@ public class GetImageTests extends BaseTest {
                 .when()
                 .get("/daVMThb")
                 .then()
-                .statusCode(200);
+                .spec(respSpec);
     }
 
 }
