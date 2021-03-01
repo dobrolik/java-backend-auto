@@ -89,15 +89,14 @@ public class GetImageTests extends BaseTest {
                 .spec(reqSpec)
                 .when()
                 .get("/KhiV5Gs")
-                .prettyPeek()
                 .then()
                 .extract()
                 .body()
                 .as(GetImageResponse.class);
         assertThat(response.getStatus(), equalTo(200));
-        assertThat(response.getImageData().getWidth(), equalTo(3000));
-        assertThat(response.getImageData().getHeight(), equalTo(2000));
-        assertThat(response.getImageData().getAccountId(), equalTo(145270851));
+        assertThat(response.getData().getWidth(), equalTo(3000));
+        assertThat(response.getData().getHeight(), equalTo(2000));
+        assertThat(response.getData().getAccountId(), equalTo(145270851));
     }
 
 }
