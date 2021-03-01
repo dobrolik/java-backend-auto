@@ -2,6 +2,7 @@ package ru.geekbrains.gostevnv;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import ru.geekbrains.gostevnv.dto.Endpoints;
 import ru.geekbrains.gostevnv.dto.GetImageResponse;
 
 import static io.restassured.RestAssured.given;
@@ -20,7 +21,7 @@ public class GetImageTests extends BaseTest {
                 .log()
                 .uri()
                 .when()
-                .get("/KhiV5Gs")
+                .get(Endpoints.getImage,"KhiV5Gs")
                 .prettyPeek()
                 .then()
                 .spec(respSpec);
@@ -50,7 +51,7 @@ public class GetImageTests extends BaseTest {
                 .log()
                 .uri()
                 .when()
-                .get("/KhiV")
+                .get(Endpoints.getImage,"/KhiV")
                 .then()
                 .statusCode(404);
     }
@@ -63,7 +64,7 @@ public class GetImageTests extends BaseTest {
                 .log()
                 .uri()
                 .when()
-                .get("/daVMThb")
+                .get(Endpoints.getImage,"/daVMThb")
                 .then()
                 .statusCode(403);
 
@@ -78,7 +79,7 @@ public class GetImageTests extends BaseTest {
                 .body("data.width", is(800))
                 .body("data.id", is(notNullValue()))
                 .when()
-                .get("/daVMThb")
+                .get(Endpoints.getImage,"/daVMThb")
                 .then()
                 .spec(respSpec);
     }
@@ -88,7 +89,7 @@ public class GetImageTests extends BaseTest {
         GetImageResponse response = given()
                 .spec(reqSpec)
                 .when()
-                .get("/KhiV5Gs")
+                .get(Endpoints.getImage,"/KhiV5Gs")
                 .then()
                 .extract()
                 .body()

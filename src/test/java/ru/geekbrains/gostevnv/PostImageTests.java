@@ -4,6 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.geekbrains.gostevnv.dto.Endpoints;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,7 +35,7 @@ public class PostImageTests extends BaseTest {
                 .body("success", is(true))
                 .body("data.id", is(notNullValue()))
                 .when()
-                .post("")
+                .post(Endpoints.postImage)
                 .prettyPeek()
                 .then()
                 .statusCode(200)
@@ -53,7 +54,7 @@ public class PostImageTests extends BaseTest {
                 .body("success", is(true))
                 .body("data.id", is(notNullValue()))
                 .when()
-                .post("")
+                .post(Endpoints.postImage)
                 .prettyPeek()
                 .then()
                 .statusCode(200)
@@ -74,7 +75,7 @@ public class PostImageTests extends BaseTest {
                 .body("data.height", is(1))
                 .body("data.width", is(1))
                 .when()
-                .post("")
+                .post(Endpoints.postImage)
                 .prettyPeek()
                 .then()
                 .statusCode(200)
@@ -93,7 +94,7 @@ public class PostImageTests extends BaseTest {
                 .body("success", is(true))
                 .body("data.id", is(notNullValue()))
                 .when()
-                .post("")
+                .post(Endpoints.postImage)
                 .prettyPeek()
                 .then()
                 .statusCode(200)
@@ -112,7 +113,7 @@ public class PostImageTests extends BaseTest {
                 .expect()
                 .body("success", is(false))
                 .when()
-                .post("")
+                .post(Endpoints.postImage)
                 .prettyPeek()
                 .then()
                 .statusCode(400)
