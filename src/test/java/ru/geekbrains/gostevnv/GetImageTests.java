@@ -1,11 +1,14 @@
 package ru.geekbrains.gostevnv;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import ru.geekbrains.gostevnv.dto.GetImageResponse;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.Matchers.*;
 
+@Slf4j
 public class GetImageTests extends BaseTest {
 
     @Test
@@ -78,6 +81,23 @@ public class GetImageTests extends BaseTest {
                 .get("/daVMThb")
                 .then()
                 .spec(respSpec);
+    }
+
+    @Test
+    void getImagePositiveWithObjectTest() {
+        GetImageResponse response = given()
+                .spec(reqSpec)
+                .when()
+                .get("/KhiV5Gs")
+                .prettyPeek()
+                .then()
+                .extract()
+                .body()
+                .as(GetImageResponse.class);
+        assertThat(response.getStatus(), equalTo(200));
+        assertThat(response.getImageData().getWidth(), equalTo(3000));
+        assertThat(response.getImageData().getHeight(), equalTo(2000));
+        assertThat(response.getImageData().getAccountId(), equalTo(145270851));
     }
 
 }
